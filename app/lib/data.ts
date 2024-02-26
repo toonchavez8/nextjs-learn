@@ -12,7 +12,7 @@ import { formatCurrency } from './utils';
 import { unstable_cache as noStore } from 'next/cache';
 
 export async function fetchRevenue() {
-  noStore();
+  noStore('Fetching revenue data...');
   // Add noStore() here to prevent the response from being cached.
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
 
@@ -35,7 +35,7 @@ export async function fetchRevenue() {
 }
 
 export async function fetchLatestInvoices() {
-  noStore();
+  noStore('Fetching the latest invoices...');
   try {
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
@@ -56,7 +56,7 @@ export async function fetchLatestInvoices() {
 }
 
 export async function fetchCardData() {
-  noStore();
+  noStore('Fetching card data...');
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
