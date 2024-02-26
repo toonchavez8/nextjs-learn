@@ -9,10 +9,10 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
-import { unstable_cache as noStore } from 'next/cache';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchRevenue() {
-  noStore('Fetching revenue data...');
+  noStore();
   // Add noStore() here to prevent the response from being cached.
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
 
@@ -35,7 +35,7 @@ export async function fetchRevenue() {
 }
 
 export async function fetchLatestInvoices() {
-  noStore('Fetching the latest invoices...');
+  noStore();
   try {
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
@@ -56,7 +56,7 @@ export async function fetchLatestInvoices() {
 }
 
 export async function fetchCardData() {
-  noStore('Fetching card data...');
+  noStore();
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
@@ -96,7 +96,7 @@ export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
 ) {
-  noStore('Fetching invoices for query: ' + query + ' on page ' + currentPage);
+  noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     const invoices = await sql<InvoicesTable>`
@@ -128,7 +128,7 @@ export async function fetchFilteredInvoices(
 }
 
 export async function fetchInvoicesPages(query: string) {
-  noStore('Fetching total number of invoices for query: ' + query);
+  noStore();
   try {
     const count = await sql`SELECT COUNT(*)
     FROM invoices
