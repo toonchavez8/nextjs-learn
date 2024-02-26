@@ -96,8 +96,8 @@ export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
 ) {
+  noStore('Fetching invoices for query: ' + query + ' on page ' + currentPage);
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-  noStore();
   try {
     const invoices = await sql<InvoicesTable>`
       SELECT
@@ -128,7 +128,7 @@ export async function fetchFilteredInvoices(
 }
 
 export async function fetchInvoicesPages(query: string) {
-  noStore();
+  noStore('Fetching total number of invoices for query: ' + query);
   try {
     const count = await sql`SELECT COUNT(*)
     FROM invoices
